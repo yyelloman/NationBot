@@ -10,7 +10,7 @@ const client = new Client({
 });
 
 client.on("ready", (context) => {
-  console.log(`${c.user.tag} is online`);
+  console.log(`${context.user.tag} is online`);
 });
 
 client.login(process.env["TOKEN"]);
