@@ -13,4 +13,8 @@ client.on("ready", (context) => {
   console.log(`${context.user.tag} is online`);
 });
 
+client.on("messageCreate", (message) => {
+  console.log(message);
+});
+
 client.login(process.env["TOKEN"]);
