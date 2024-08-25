@@ -9,4 +9,8 @@ const client = new Client({
   ],
 });
 
-client.login();
+client.on("ready", (c) => {
+  console.log("The bot is ready!");
+});
+
+client.login(process.env["TOKEN"]);
