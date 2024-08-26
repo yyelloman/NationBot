@@ -1,4 +1,5 @@
-const { Client, IntentsBitField } = require('discord.js');
+const { Client, IntentsBitField } = require("discord.js");
+require("./register-comands");
 
 const client = new Client({
     intents: [
@@ -7,14 +8,18 @@ const client = new Client({
         IntentsBitField.Flags.GuildMessages,
         IntentsBitField.Flags.MessageContent,
     ],
-});           
-
-client.on('ready', (context) => {
-    console.log(`${context.user.tag} is online`);
 });
 
-client.on('messageCreate', (message) => {
-    console.log(message.content);
+client.on("ready", (c) => {
+    console.log(`${c.user.tag} is online`);
 });
 
-client.login(process.env['TOKEN']);
+client.on("interactionCreate", (interaction) => {
+    if (interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === "hey") {
+        interaction.reply("hey");
+    }
+});
+
+client.login(process.env["TOKEN"]);
