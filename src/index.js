@@ -29,32 +29,17 @@ for (const folder of commandFolders) {
 	}
 }
 
-// when the bot is ready
-client.once(Events.ClientReady, (c) => {
-    console.log(`${c.user.tag} client is ready`);
-});
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-client.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) return;
-
-    const command = interaction.client.commands.get(interaction.commandName);
-
-    if (!command) {
-        console.error(`ERROR: Command ${interaction.commandName} does not exist!!!`);
-        await interaction.reply(`The console just errored: \`\`\`ERROR: Command ${interaction.commandName} does not exist!!\`\`\``);
-        return;
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
     }
-
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error(`ERROR: ${error}`);
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: "There was an error running the command :[", ephemeral: true });
-        } else {
-            await interaction.reply({ content: "There was an error running the command :[", ephemeral: true });
-        }
-    }
-});
+}
 
 client.login(process.env["TOKEN"]);
