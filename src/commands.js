@@ -30,7 +30,7 @@ const rest = new REST().setToken(process.env["TOKEN"]);
         console.log(`... registering of ${commands.length} slash commands has BEGUN.`);
 
         const data = await rest.put(
-            Routes.applicationGuildCommands(process.env["CLIENT_ID"], process.env["TESTGUILD_ID"]),
+            Routes.applicationCommands(process.env["CLIENT_ID"]),
             { body: commands }
         );
 
