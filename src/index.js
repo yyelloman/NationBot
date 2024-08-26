@@ -40,7 +40,7 @@ client.on(Events.InteractionCreate, async interaction => {
     const command = interaction.client.commands.get(interaction.commandName);
 
     if (!command) {
-        console.error(`ERROR: Command ${interaction.commandName} does not exist!!`);
+        console.error(`ERROR: Command ${interaction.commandName} does not exist!!!`);
         await interaction.reply(`The console just errored: \`\`\`ERROR: Command ${interaction.commandName} does not exist!!\`\`\``);
         return;
     }
