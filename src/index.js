@@ -1,5 +1,5 @@
 const { Client, IntentsBitField } = require("discord.js");
-require("./register-comands");
+//require("./register-comands");
 
 const client = new Client({
     intents: [
@@ -18,6 +18,7 @@ client.on("interactionCreate", (interaction) => {
     if (interaction.isChatInputCommand()) return;
 
     if (interaction.commandName === "hey") {
+        console.log("did");
         interaction.reply("hey");
     }
 });
