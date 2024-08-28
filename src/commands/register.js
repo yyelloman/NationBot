@@ -9,7 +9,7 @@ module.exports = {
         const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
         await interaction.reply({ embeds: [embed] });
         
-        interaction.guild.channels.create({
+        const registrationChannel = interaction.guild.channels.create({
             name: `${interaction.user.username}-registration`,
             type: ChannelType.GuildText,
             reason: `${interaction.user.username} (${interaction.user.id}) wanted to register a country`,
@@ -20,15 +20,15 @@ module.exports = {
                 },
                 {
                     id: interaction.user.id,
-                    allow: [PermissionFlagsBits.ViewChannel]
+                    allow: [PermissionFlagsBits.ViewChannel]    
                 },
                 {
                     id: interaction.client.user.id,
                     allow: [PermissionFlagsBits.ViewChannel]
                 }
             ]
-        })
-            .then(console.log)
-            .catch(console.error);
+        }).then(() => {console.log("Created channel")}).catch(console.error);
+
+        registrationChannel.send({ content: "test message" });
     }
 }
