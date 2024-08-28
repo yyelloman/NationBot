@@ -29,7 +29,7 @@ module.exports = {
             ]
         }).then(() => {console.log("Created channel")}).catch(console.error);
 
-        const registrationChannelFromClient = interaction.client.channels.cache.get(registrationChannel.id)
-        registrationChannelFromClient.send({ content: "test message" });
+        const regChannelFromInteraction = interaction.options.getChannel(registrationChannel.name);
+        await regChannelFromInteraction.send({ embeds: [embed] });
     }
 }
