@@ -14,6 +14,8 @@ const client = new Client({
     ],
 });
 
+client.user.setStatus("my master is developing me at this moment");
+
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
