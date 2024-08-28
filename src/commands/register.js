@@ -27,7 +27,7 @@ module.exports = {
                     allow: [PermissionFlagsBits.ViewChannel]
                 }
             ]
-        }).then(channel => {console.alog(`${channel.name} created`)}).catch(console.error);
+        }).then(channel => {console.log(`${channel.name} created`)}).catch(console.error);
 
         let channel = interaction.client.channels.cache.get(registrationChannel.id);
 
