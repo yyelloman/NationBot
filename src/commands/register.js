@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits } = require("discord.js");
 const { ACCENT_COLOR } = require("..");
 
 module.exports = {
@@ -8,8 +8,9 @@ module.exports = {
     async execute(interaction) {
         const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
         await interaction.reply({ embeds: [embed] });
-        
+
         try {
+            // Create the registration channel
             const registrationChannel = await interaction.guild.channels.create({
                 name: `${interaction.user.username}-registration`,
                 type: ChannelType.GuildText,
@@ -21,26 +22,26 @@ module.exports = {
                     },
                     {
                         id: interaction.user.id,
-                        allow: [PermissionFlagsBits.ViewChannel]    
+                        allow: [PermissionFlagsBits.ViewChannel]
                     },
                     {
                         id: interaction.client.user.id,
                         allow: [PermissionFlagsBits.ViewChannel]
                     }
                 ]
-            }).then(channel => {console.log(`${channel.name} created`)}).catch(console.error);
-    
-            let channel = interaction.client.channels.cache.get(registrationChannel.id);
-    
-            if (!channel) {
-                try {
-                    channel = await interaction.client.channels.fetch(registrationChannel.id).then(() => {}).catch(console.error);
-                } catch (e) {
-                    console.log(e);
-                }
+            });
+
+            // Check if the channel was created successfully
+            if (registrationChannel) {
+                console.log(`Channel created: ${registrationChannel.name}`); // Log the channel name for debugging
+
+                // Send a message to the newly created channel
+                await registrationChannel.send("hi");
+            } else {
+                console.error("Failed to create the registration channel.");
             }
-    
-            if (channel) channel.send("hi");
-        } catch (e) { console.log(e) }
+        } catch (error) {
+            console.error('Error creating registration channel:', error);
+        }
     }
 }
