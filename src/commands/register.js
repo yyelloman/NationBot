@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits } = require("discord.js");
-const { ACCENT_COLOR } = require("..");
+const { ACCENT_COLOR, ERROR_COLOR } = require("..");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -38,10 +38,12 @@ module.exports = {
                 // Send a message to the newly created channel
                 await registrationChannel.send("hi");
             } else {
-                console.error("Failed to create the registration channel.");
+                const errorEmbed = new EmbedBuilder().setDescription(`**Error creating registration channel :[**`).setColor(ERROR_COLOR);
+                await interaction.followUp({ embeds: [errorEmbed] });
             }
         } catch (error) {
-            console.error('Error creating registration channel:', error);
+            const errorEmbed = new EmbedBuilder().setDescription(`**Error creating registration channel :[**\n\`\`\`${error}\`\`\``).setColor(ERROR_COLOR);
+            await interaction.followUp({ embeds: [errorEmbed] });
         }
     }
 }

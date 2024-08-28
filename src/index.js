@@ -3,7 +3,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const ACCENT_COLOR = 0x3479d5;
-module.exports = { ACCENT_COLOR };
+const ERROR_COLOR = 0xb5354e
+module.exports = { ACCENT_COLOR, ERROR_COLOR };
 
 const client = new Client({
     intents: [
