@@ -11,9 +11,9 @@ module.exports = {
         ),
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "testsubcommand") {
-            await interaction.reply("PONG!!!!!!!!!!!!!!!!!!!!!!!!!")
+            await interaction.reply("PONG!!!!!!!!!!!!!!!!!!!!!!!!!");
         } else {
-            await interaction.reply("pong")
+            await interaction.reply("pong");
         }
     }
 }
