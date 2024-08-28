@@ -1,4 +1,4 @@
-const { Client, IntentsBitField, Collection, Events } = require("discord.js");
+const { Client, IntentsBitField, Collection, Events, ActivityType } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -42,4 +42,4 @@ for (const file of eventFiles) {
     }
 }
 
-client.login(process.env["TOKEN"]).then(() => {client.user.setActivity("my master is developing me at this moment");});
+client.login(process.env["TOKEN"]).then(() => {client.user.setActivity("my Master develop me", { type: ActivityType.Watching });});
