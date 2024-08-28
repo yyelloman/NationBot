@@ -9,7 +9,7 @@ module.exports = {
         const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
         await interaction.reply({ embeds: [embed] });
         
-        const registrationChannel = interaction.guild.channels.create({
+        const registrationChannel = await interaction.guild.channels.create({
             name: `${interaction.user.username}-registration`,
             type: ChannelType.GuildText,
             reason: `${interaction.user.username} (${interaction.user.id}) wanted to register a country`,
