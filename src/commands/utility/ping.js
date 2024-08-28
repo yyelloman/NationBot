@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, SlashCommandSubcommandBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,8 +12,6 @@ module.exports = {
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "testsubcommand") {
             await interaction.reply("PONG!!!!!!!!!!!!!!!!!!!!!!!!!");
-        } else {
-            await interaction.reply("pong");
         }
     }
 }
