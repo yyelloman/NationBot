@@ -29,7 +29,7 @@ module.exports = {
             ]
         }).then(() => {console.log("Created channel")}).catch(console.error);
 
-        const regChannelFromInteraction = interaction.options.cache.fetch(registrationChannel.name);
+        const regChannelFromInteraction = await interaction.guild.channels.cache.fetch(registrationChannel.id);
         
     }
 }
