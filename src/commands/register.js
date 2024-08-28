@@ -29,7 +29,7 @@ module.exports = {
             ]
         }).then(channel => {console.log(`${channel.name} created`)}).catch(console.error);
 
-        let channel = client.channels.cache.get(registrationChannel.id);
+        let channel = interaction.client.channels.cache.get(registrationChannel.id);
 
         if (!channel) {
             try {
