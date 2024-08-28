@@ -30,6 +30,6 @@ module.exports = {
         }).then(() => {console.log("Created channel")}).catch(console.error);
 
         const regChannelFromInteraction = await interaction.guild.channels.cache.get(registrationChannel.id);
-        
+        await regChannelFromInteraction.send("HI");
     }
 }
