@@ -14,7 +14,7 @@ const client = new Client({
     ],
 });
 
-client.user.setStatus("my master is developing me at this moment");
+client.user.setActivity("my master is developing me at this moment");
 
 client.commands = new Collection();
 
