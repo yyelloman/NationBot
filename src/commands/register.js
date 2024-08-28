@@ -33,7 +33,7 @@ module.exports = {
 
         if (!channel) {
             try {
-                channel = await client.channels.fetch("id");
+                channel = await interaction.client.channels.fetch(registrationChannel.id);
             } catch (e) {
                 console.log(e);
             }
