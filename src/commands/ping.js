@@ -6,6 +6,6 @@ module.exports = {
         .setDescription("desc"),
     async execute(interaction) {
         const embed = new EmbedBuilder().setDescription(`Pong! Latency is ${Math.round(interaction.client.ws.ping)}.`).setColor(0x3479d5);
-        await interaction.reply({ embeds: embed });
+        await interaction.reply({ embeds: [embed] });
     }
 }
