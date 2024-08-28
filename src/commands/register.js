@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder } = require("discord.js");
 const { ACCENT_COLOR, ERROR_COLOR } = require("..");
 
 module.exports = {
@@ -93,7 +93,7 @@ async function proceedWithRegistration(interaction, channel) {
         .setDescription("**What's the name of your country?** e.g. Canada, Russia, Germany. The full name will be automatically adjusted to the government you choose.")
         .setColor(ACCENT_COLOR);
 
-    await channel.send({ embeds: embed });
+    await channel.send({ embeds: [nameEmbed] });
 
     await channel.awaitMessages({ max: 1, time: 180_000, errors: ["time"] })
         .catch(collected => {
@@ -109,7 +109,7 @@ async function proceedWithRegistration(interaction, channel) {
         .setDescription("**Choose a government type**")
         .setColor(ACCENT_COLOR);
     
-    const governmentSelect = new StringSelectMenuBuilder()
+    const governmentCategSelect = new StringSelectMenuBuilder()
         .setCustomId("government")
         .setPlaceholder("Choose a government type category")
         .addOptions(
@@ -122,6 +122,14 @@ async function proceedWithRegistration(interaction, channel) {
                 .setDescription("Any form of government where power belongs to the ")
                 .setValue("undmc")
         )
+
+    const governmentCategRow = new ActionRowBuilder()
+        .addComponents(governmentCategSelect);
+    
+    await channel.send({
+        embeds: [governmentEmbed],
+        components: [row]
+    });
 }
 
 function noResponse(interaction, channel) {
