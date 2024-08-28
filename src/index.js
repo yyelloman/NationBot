@@ -2,6 +2,8 @@ const { Client, IntentsBitField, Collection, Events } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
 
+export const ACCENT_COLOR = 0x3479d5;
+
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
