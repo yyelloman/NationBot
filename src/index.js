@@ -14,8 +14,6 @@ const client = new Client({
     ],
 });
 
-client.user.setActivity("my master is developing me at this moment");
-
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
@@ -44,4 +42,4 @@ for (const file of eventFiles) {
     }
 }
 
-client.login(process.env["TOKEN"]);
+client.login(process.env["TOKEN"]).then(() => {client.user.setActivity("my master is developing me at this moment");});
