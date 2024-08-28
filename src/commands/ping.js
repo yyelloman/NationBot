@@ -1,17 +1,11 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("ping")
-        .setDescription("desc")
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName("testsubcommand")
-                .setDescription("test")
-        ),
+        .setDescription("desc"),
     async execute(interaction) {
-        if (interaction.options.getSubcommand() === "testsubcommand") {
-            await interaction.reply("PONG!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
+        const embed = new EmbedBuilder().setDescription(`Pong! Latency is ${Math.round(bot.ws.ping)}.`).setColor(0x3479d5);
+        await interaction.reply({ embeds: embed });
     }
 }
