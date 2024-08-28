@@ -3,7 +3,7 @@ const { ACCENT_COLOR } = require("..");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("ping")
+        .setName("register")
         .setDescription("desc"),
     async execute(interaction) {
         const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
