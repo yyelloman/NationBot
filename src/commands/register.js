@@ -29,7 +29,7 @@ module.exports = {
             ]
         }).then(channel => channel.send("hi")).catch(console.error);
 
-        const channel = interaction.client.channels.cache.find(channel => channel.name === registrationChannel.name)
-        channel.send("woo");
+        interaction.client.channels.cache.fetch(registrationChannel.id)
+            .then(channel => channel.send("this is not good news"));
     }
 }
