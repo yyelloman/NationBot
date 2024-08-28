@@ -6,44 +6,65 @@ module.exports = {
         .setName("register")
         .setDescription("Register your country"),
     async execute(interaction) {
-        const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
-        await interaction.reply({ embeds: [embed] });
+        register(interaction);
+    }
+}
 
-        try {
-            // Create the registration channel
-            const registrationChannel = await interaction.guild.channels.create({
-                name: `${interaction.user.username}-registration`,
-                type: ChannelType.GuildText,
-                reason: `${interaction.user.username} (${interaction.user.id}) wanted to register a country`,
-                permissionOverwrites: [
-                    {
-                        id: interaction.guild.roles.everyone,
-                        deny: [PermissionFlagsBits.ViewChannel]
-                    },
-                    {
-                        id: interaction.user.id,
-                        allow: [PermissionFlagsBits.ViewChannel]
-                    },
-                    {
-                        id: interaction.client.user.id,
-                        allow: [PermissionFlagsBits.ViewChannel]
-                    }
-                ]
-            });
+async function register(interaction) {
+    const embed = new EmbedBuilder()
+        .setDescription(`**Alright, please wait :]**`)
+        .setColor(ACCENT_COLOR);
+    await interaction.reply({ embeds: [embed] });
 
-            // Check if the channel was created successfully
-            if (registrationChannel) {
-                console.log(`Channel created: ${registrationChannel.name}`); // Log the channel name for debugging
+    try {
+        const registrationChannel = await interaction.guild.channels.create({
+            name: `${interaction.user.username}-registration`,
+            type: ChannelType.GuildText,
+            reason: `${interaction.user.username} (${interaction.user.id}) wanted to register a country`,
+            permissionOverwrites: [
+                {
+                    id: interaction.guild.roles.everyone,
+                    deny: [PermissionFlagsBits.ViewChannel]
+                },
+                {
+                    id: interaction.user.id,
+                    allow: [PermissionFlagsBits.ViewChannel]
+                },
+                {
+                    id: interaction.client.user.id,
+                    allow: [PermissionFlagsBits.ViewChannel]
+                }
+            ]
+        });
 
-                // Send a message to the newly created channel
-                await registrationChannel.send("hi");
-            } else {
-                const errorEmbed = new EmbedBuilder().setDescription(`**Error creating registration channel :[**`).setColor(ERROR_COLOR);
-                await interaction.followUp({ embeds: [errorEmbed] });
-            }
-        } catch (error) {
-            const errorEmbed = new EmbedBuilder().setDescription(`**Error creating registration channel :[**\n\`\`\`${error}\`\`\``).setColor(ERROR_COLOR);
+        if (registrationChannel) {
+            console.log(`Registration channel #${registrationChannel.name} has been created`);
+            
+            const followUpEmbed = new EmbedBuilder()
+                .setDescription(
+                    `**A channel has been created for your registration: <#${registrationChannel.id}>. Please go there to begin.`
+                )
+                .setColor(ACCENT_COLOR);
+
+            interaction.followUp({ embeds: [followUpEmbed] });
+            proceedWithRegistration(interaction, registrationChannel);
+        } else {
+            const errorEmbed = new EmbedBuilder().setDescription(`**Error creating registration channel :[**`).setColor(ERROR_COLOR);
             await interaction.followUp({ embeds: [errorEmbed] });
         }
+    } catch (error) {
+        const errorEmbed = new EmbedBuilder()
+            .setDescription(
+                `**Error creating registration channel :[**\n\`\`\`${error}\`\`\``
+            )
+            .setColor(ERROR_COLOR);
+        await interaction.followUp({ embeds: [errorEmbed] });
     }
+}
+
+async function proceedWithRegistration(interaction, channel) {
+    const startEmbed = new EmbedBuilder()
+        .setTitle("Beginning registration...")
+        .setColor(ACCENT_COLOR);
+    await channel.send({ content: `<@${interaction.user.id}>`, embeds: [startEmbed] });
 }
