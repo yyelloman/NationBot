@@ -29,7 +29,7 @@ for (const folder of commandFolders) {
 
 const rest = new REST().setToken(process.env["TOKEN"]);
 
-rest.put(Routes.applicationGuildCommands(process.env["CLIENT_ID"], process.env["TESTGUILD_ID"])), { body: [] }
+rest.put(Routes.applicationGuildCommands(process.env["CLIENT_ID"], process.env["TESTGUILD_ID"]), { body: [] })
 	.then(() => console.log('Successfully deleted all guild commands.'))
 	.catch(console.error);
 
