@@ -10,7 +10,7 @@ module.exports = {
                 .setDescription("test")
         ),
     async execute(interaction) {
-        if (interaction.options.getSubCommand() === "testsubcommand") {
+        if (interaction.options.getSubcommand() === "testsubcommand") {
             await interaction.reply("PONG!!!!!!!!!!!!!!!!!!!!!!!!!")
         } else {
             await interaction.reply("pong")
