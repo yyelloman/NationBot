@@ -64,6 +64,7 @@ async function register(interaction) {
 
 async function proceedWithRegistration(interaction, channel) {
     let registrationData = {
+        ok: true,
         name: ""
     }
     const startEmbed = new EmbedBuilder()
@@ -75,9 +76,14 @@ async function proceedWithRegistration(interaction, channel) {
     await channel.awaitMessages({ max: 1, time: 5000, errors: ["time"] })
         .catch(collected => {
             channel.delete(`${interaction.user.username} (${interaction.user.username}) did not give a response in time (registration)`)
-                .then(() => console.log(`${interaction.user.username} (${interaction.user.username}) did not give a response in time (registration)`))
+                .then(console.log)
                 .catch(console.error);
+            registrationData.ok = false;
         });
+
+    if (registrationData.ok === false) {
+        return;
+    }
 
     await channel.send({ content: "working" });
 }
