@@ -6,7 +6,6 @@ module.exports = {
         .setName("register")
         .setDescription("Register your country"),
     async execute(interaction) {
-        let registrationChannelSendable
         const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
         await interaction.reply({ embeds: [embed] });
         
@@ -28,8 +27,18 @@ module.exports = {
                     allow: [PermissionFlagsBits.ViewChannel]
                 }
             ]
-        }).then(channel => {channel.send("hi"); registrationChannelSendable = channel}).catch(console.error);
-    
-        registrationChannelSendable.send("not gonna work");
+        }).then(channel => {console.log(`${channel.name} created`)}).catch(console.error);
+
+        let channel = client.channels.cache.get(registrationChannel.id);
+
+        if (!channel) {
+            try {
+                channel = await client.channels.fetch("id");
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        if (channel) channel.send("hi");
     }
 }
