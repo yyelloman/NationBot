@@ -27,9 +27,6 @@ module.exports = {
                     allow: [PermissionFlagsBits.ViewChannel]
                 }
             ]
-        }).then(() => {console.log("Created channel")}).catch(console.error);
-
-        const regChannelFromInteraction = await interaction.guild.channels.cache.get(registrationChannel.id);
-        await regChannelFromInteraction.send("HI");
+        }).then(channel => channel.send("hi")).catch(console.error);
     }
 }
