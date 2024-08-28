@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits, Collection } = require("discord.js");
 const { ACCENT_COLOR, ERROR_COLOR } = require("..");
 
 module.exports = {
@@ -42,7 +42,7 @@ async function register(interaction) {
             
             const followUpEmbed = new EmbedBuilder()
                 .setDescription(
-                    `**A channel has been created for your registration: <#${registrationChannel.id}>. Please go there to begin.`
+                    `**A channel has been created for your registration: <#${registrationChannel.id}>. Please go there to begin.**`
                 )
                 .setColor(ACCENT_COLOR);
 
@@ -63,8 +63,16 @@ async function register(interaction) {
 }
 
 async function proceedWithRegistration(interaction, channel) {
+    let registrationData = {
+        name: ""
+    }
     const startEmbed = new EmbedBuilder()
-        .setTitle("Beginning registration...")
+        .setTitle("Country Registration")
+        .setDescription("Send any message within 3 minutes to begin. You will be given 3 minutes to answer each question.")
         .setColor(ACCENT_COLOR);
     await channel.send({ content: `<@${interaction.user.id}>`, embeds: [startEmbed] });
+    
+    channel.awaitMessages({ max: 1, time: 180_000, errors: ["time"] });
+
+    await channel.send({ content: "working" });
 }
