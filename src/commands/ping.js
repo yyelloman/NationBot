@@ -4,7 +4,7 @@ const { ACCENT_COLOR } = require("..");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("ping")
-        .setDescription("desc"),
+        .setDescription("Reply with the bot's ping"),
     async execute(interaction) {
         const embed = new EmbedBuilder().setDescription(`Pong! Latency is ${Date.now() - interaction.createdTimestamp}ms.`).setColor(ACCENT_COLOR);
         await interaction.reply({ embeds: [embed] });
