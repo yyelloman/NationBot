@@ -4,12 +4,16 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("desc")
-        .addSubcommand({
-            input: new SlashCommandSubcommandBuilder()
-                .setName("test")
-                .setDescription("testttt")
-        }),
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("testsubcommand")
+                .setDescription("test")
+        ),
     async execute(interaction) {
-        await interaction.reply("pong");
+        if (interaction.options.getSubCommand() === "testsubcommand") {
+            await interaction.reply("PONG!!!!!!!!!!!!!!!!!!!!!!!!!")
+        } else {
+            await interaction.reply("pong")
+        }
     }
 }
