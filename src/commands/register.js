@@ -29,6 +29,6 @@ module.exports = {
             ]
         }).then(channel => channel.send("hi")).catch(console.error);
 
-        registrationChannel.send("aa");
+        const channel = interaction.client.channels.cache.find(channel => channel.name === registrationChannel.name)
     }
 }
