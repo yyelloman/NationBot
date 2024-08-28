@@ -128,7 +128,7 @@ async function proceedWithRegistration(interaction, channel) {
     
     await channel.send({
         embeds: [governmentEmbed],
-        components: [row]
+        components: [governmentCategRow]
     });
 }
 
