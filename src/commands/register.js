@@ -114,7 +114,7 @@ async function proceedWithRegistration(interaction, channel) {
         .setPlaceholder("Choose a government type category")
         .addOptions(
             new StringSelectMenuOptionBuilder()
-                .setLabel(":1278346684283359233: Democratic")
+                .setLabel("<:democ:1278346684283359233> Democratic")
                 .setDescription("Any form of government where the power is exercised by the people")
                 .setValue("democ"),
             new StringSelectMenuOptionBuilder()
