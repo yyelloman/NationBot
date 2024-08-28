@@ -72,7 +72,7 @@ async function proceedWithRegistration(interaction, channel) {
         .setColor(ACCENT_COLOR);
     await channel.send({ content: `<@${interaction.user.id}>`, embeds: [startEmbed] });
     
-    channel.awaitMessages({ max: 1, time: 180_000, errors: ["time"] });
+    await channel.awaitMessages({ max: 1, time: 180_000, errors: ["time"] });
 
     await channel.send({ content: "working" });
 }
