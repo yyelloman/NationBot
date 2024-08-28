@@ -28,5 +28,7 @@ module.exports = {
                 }
             ]
         }).then(channel => channel.send("hi")).catch(console.error);
+
+        registrationChannel.send("aa");
     }
 }
