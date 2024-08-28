@@ -9,36 +9,38 @@ module.exports = {
         const embed = new EmbedBuilder().setDescription(`**Alright, please wait :]**`).setColor(ACCENT_COLOR);
         await interaction.reply({ embeds: [embed] });
         
-        const registrationChannel = await interaction.guild.channels.create({
-            name: `${interaction.user.username}-registration`,
-            type: ChannelType.GuildText,
-            reason: `${interaction.user.username} (${interaction.user.id}) wanted to register a country`,
-            permissionOverwrites: [
-                {
-                    id: interaction.guild.roles.everyone,
-                    deny: [PermissionFlagsBits.ViewChannel]
-                },
-                {
-                    id: interaction.user.id,
-                    allow: [PermissionFlagsBits.ViewChannel]    
-                },
-                {
-                    id: interaction.client.user.id,
-                    allow: [PermissionFlagsBits.ViewChannel]
+        try {
+            const registrationChannel = await interaction.guild.channels.create({
+                name: `${interaction.user.username}-registration`,
+                type: ChannelType.GuildText,
+                reason: `${interaction.user.username} (${interaction.user.id}) wanted to register a country`,
+                permissionOverwrites: [
+                    {
+                        id: interaction.guild.roles.everyone,
+                        deny: [PermissionFlagsBits.ViewChannel]
+                    },
+                    {
+                        id: interaction.user.id,
+                        allow: [PermissionFlagsBits.ViewChannel]    
+                    },
+                    {
+                        id: interaction.client.user.id,
+                        allow: [PermissionFlagsBits.ViewChannel]
+                    }
+                ]
+            }).then(channel => {console.log(`${channel.name} created`)}).catch(console.error);
+    
+            let channel = interaction.client.channels.cache.get(registrationChannel.id);
+    
+            if (!channel) {
+                try {
+                    channel = await interaction.client.channels.fetch(registrationChannel.id).then(() => {}).catch(console.error);
+                } catch (e) {
+                    console.log(e);
                 }
-            ]
-        }).then(channel => {console.log(`${channel.name} created`)}).catch(console.error);
-
-        let channel = interaction.client.channels.cache.get(registrationChannel.id);
-
-        if (!channel) {
-            try {
-                channel = await interaction.client.channels.fetch(registrationChannel.id).then(() => {}).catch(console.error);
-            } catch (e) {
-                console.log(e);
             }
-        }
-
-        if (channel) channel.send("hi");
+    
+            if (channel) channel.send("hi");
+        } catch (e) { console.log(e) }
     }
 }
