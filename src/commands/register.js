@@ -72,7 +72,12 @@ async function proceedWithRegistration(interaction, channel) {
         .setColor(ACCENT_COLOR);
     await channel.send({ content: `<@${interaction.user.id}>`, embeds: [startEmbed] });
     
-    await channel.awaitMessages({ max: 1, time: 180_000, errors: ["time"] });
+    await channel.awaitMessages({ max: 1, time: 5000, errors: ["time"] })
+        .catch(collected => {
+            channel.delete(`${interaction.user.username} (${interaction.user.username}) did not give a response in time (registration)`)
+                .then(() => console.log(`${interaction.user.username} (${interaction.user.username}) did not give a response in time (registration)`))
+                .catch(console.error);
+        });
 
     await channel.send({ content: "working" });
 }
