@@ -29,7 +29,7 @@ module.exports = {
             ]
         }).then(() => {console.log("Created channel")}).catch(console.error);
 
-        const registrationChannelFromClient = interaction.client.get(registrationChannel.id)
+        const registrationChannelFromClient = interaction.client.channels.get(registrationChannel.id)
         registrationChannelFromClient.send({ content: "test message" });
     }
 }
