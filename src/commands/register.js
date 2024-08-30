@@ -174,9 +174,6 @@ async function proceedWithRegistration(interaction, channel) {
             })
         }
     })
-
-    await channel.send({ content: `government type = ${registrationData.governmentType}` });
-    
 }
 
 function noResponse(interaction, channel) {
