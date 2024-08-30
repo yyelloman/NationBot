@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionFlagsBits, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ComponentType } = require("discord.js");
 const { ACCENT_COLOR, ERROR_COLOR } = require("..");
 
 module.exports = {
@@ -70,7 +70,7 @@ async function proceedWithRegistration(interaction, channel) {
 
     const startEmbed = new EmbedBuilder()
         .setTitle("Country Registration")
-        .setDescription("Send any message within 3 minutes to begin. You will be given 3 minutes to answer each question (unless it is a select menu). You can change your answers later with /nation config.")
+        .setDescription("Send any message within 3 minutes to begin. You will be given 3 minutes to answer each question. You can change your answers later with /nation config.")
         .setColor(ACCENT_COLOR);
     await channel.send({ content: `<@${interaction.user.id}>`, embeds: [startEmbed] });
     
@@ -136,41 +136,38 @@ async function proceedWithRegistration(interaction, channel) {
 
     let governmentCateg = "";
 
-    const governmentCategColFilter = i => i.user.id === interaction.user.id;
-
-    try {
-        const confirmation = await governmentCategResponse.awaitMessageComponent({ filter: governmentCategColFilter, time: 60_000 });
-        
-        governmentCateg = confirmation.customId;
-    } catch (error) {
-        console.error(`ERROR: ${error} (government category select menu)`);
-    }
+    const governmentCategCol = governmentCategResponse.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
     console.log(governmentCateg);
-    if (governmentCateg === "democ") {
-        const governmentDemocSelect = new StringSelectMenuBuilder()
-        .setCustomId("government")
-        .setPlaceholder("Choose a democratic government type")
-        .addOptions(
-            new StringSelectMenuOptionBuilder()
-                .setLabel("Direct")
-                .setDescription("Where the people have a direct say in law making")
-                .setValue("dir-democ")
-                .setEmoji("1279016991155294271"),
-            new StringSelectMenuOptionBuilder()
-                .setLabel("Representative")
-                .setDescription("Where the people elect rep.'s for law making")
-                .setValue("rep-democ")
-                .setEmoji("1279017005004886046")
-        )
+    
+    governmentCategCol.on("collect", async i => {
+        const selection = i.values[0];
+        if (selection === "democ") {
+            const governmentDemocSelect = new StringSelectMenuBuilder()
+            .setCustomId("government")
+            .setPlaceholder("Choose a democratic government type")
+            .addOptions(
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Direct")
+                    .setDescription("Where the people have a direct say in law making")
+                    .setValue("dir-democ")
+                    .setEmoji("1279016991155294271"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Representative")
+                    .setDescription("Where the people elect rep.'s for law making")
+                    .setValue("rep-democ")
+                    .setEmoji("1279017005004886046")
+            )
 
-        const governmentDemocRow = new ActionRowBuilder()
-            .addComponents(governmentDemocSelect);
+            const governmentDemocRow = new ActionRowBuilder()
+                .addComponents(governmentDemocSelect);
 
-        const governmentDemocResponse = await channel.send({
-            content: "...",
-            components: [governmentDemocRow]
-        });
-    }
+            const governmentDemocResponse = await channel.send({
+                content: "...",
+                components: [governmentDemocRow]
+            });
+        }
+    })
+    
 }
 
 function noResponse(interaction, channel) {
