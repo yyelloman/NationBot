@@ -67,6 +67,7 @@ async function proceedWithRegistration(interaction, channel) {
         ok: true,
         name: ""
     }
+
     const startEmbed = new EmbedBuilder()
         .setTitle("Country Registration")
         .setDescription("Send any message within 3 minutes to begin. You will be given 3 minutes to answer each question (unless it is a select menu). You can change your answers later with /nation config.")
@@ -115,12 +116,12 @@ async function proceedWithRegistration(interaction, channel) {
         .addOptions(
             new StringSelectMenuOptionBuilder()
                 .setLabel("Democratic")
-                .setDescription("Any form of government where the power is exercised by the people")
+                .setDescription("Where the power is exercised by the people")
                 .setValue("democ")
                 .setEmoji("1279000100248748104"),
             new StringSelectMenuOptionBuilder()
                 .setLabel("Undemocratic")
-                .setDescription("Any form of government where power belongs to the ")
+                .setDescription("Where the power belongs to a few")
                 .setValue("undemoc")
                 .setEmoji("1279003115634298922")
         )
@@ -128,10 +129,47 @@ async function proceedWithRegistration(interaction, channel) {
     const governmentCategRow = new ActionRowBuilder()
         .addComponents(governmentCategSelect);
     
-    await channel.send({
+    const governmentCategResponse = await channel.send({
         embeds: [governmentEmbed],
         components: [governmentCategRow]
     });
+
+    let governmentCateg;
+
+    const governmentCategColFilter = i => i.user.id === interaction.user.id;
+
+    try {
+        const confirmation = await governmentCategResponse.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
+        
+        governmentCateg = confirmation.customId;
+    } catch (error) {
+        console.error(`ERROR: ${error} (government category select menu)`);
+    }
+
+    if (governmentCateg === "democ") {
+        const governmentDemocSelect = new StringSelectMenuBuilder()
+        .setCustomId("government")
+        .setPlaceholder("Choose a democratic government type")
+        .addOptions(
+            new StringSelectMenuOptionBuilder()
+                .setLabel("Direct")
+                .setDescription("Where the people have a direct say in law making")
+                .setValue("dir-democ")
+                .setEmoji("1279016991155294271"),
+            new StringSelectMenuOptionBuilder()
+                .setLabel("Representative")
+                .setDescription("Where the people elect rep.'s for law making")
+                .setValue("rep-democ")
+                .setEmoji("1279017005004886046")
+        )
+
+        const governmentDemocRow = new ActionRowBuilder()
+            .addComponents(governmentDemocSelect);
+
+        const governmentDemocResponse = await channel.send({
+            components: [governmentDemocRow]
+        });
+    }
 }
 
 function noResponse(interaction, channel) {
