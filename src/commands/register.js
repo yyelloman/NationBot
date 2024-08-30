@@ -145,7 +145,7 @@ async function proceedWithRegistration(interaction, channel) {
     } catch (error) {
         console.error(`ERROR: ${error} (government category select menu)`);
     }
-
+    console.log(governmentCateg);
     if (governmentCateg === "democ") {
         const governmentDemocSelect = new StringSelectMenuBuilder()
         .setCustomId("government")
