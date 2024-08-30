@@ -134,7 +134,7 @@ async function proceedWithRegistration(interaction, channel) {
         components: [governmentCategRow]
     });
 
-    let governmentCateg;
+    let governmentCateg = "";
 
     const governmentCategColFilter = i => i.user.id === interaction.user.id;
 
