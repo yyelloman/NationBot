@@ -65,7 +65,8 @@ async function register(interaction) {
 async function proceedWithRegistration(interaction, channel) {
     let registrationData = {
         ok: true,
-        name: ""
+        name: "",
+        governmentType: "",
     }
 
     const startEmbed = new EmbedBuilder()
@@ -125,7 +126,7 @@ async function proceedWithRegistration(interaction, channel) {
                 .setValue("undemoc")
                 .setEmoji("1279003115634298922")
         )
-
+    
     const governmentCategRow = new ActionRowBuilder()
         .addComponents(governmentCategSelect);
     
@@ -169,9 +170,12 @@ async function proceedWithRegistration(interaction, channel) {
             governmentDemocCol.on("collect", async i1 => {
                 governmentDemocMsg.delete();
                 const democSelection = i.values[0];
+                registrationData.governmentType = democSelection;
             })
         }
     })
+
+    await channel.send({ content: `government type = ${registrationData.governmentType}` })
     
 }
 
