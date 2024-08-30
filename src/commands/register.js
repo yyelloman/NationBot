@@ -129,21 +129,19 @@ async function proceedWithRegistration(interaction, channel) {
     const governmentCategRow = new ActionRowBuilder()
         .addComponents(governmentCategSelect);
     
-    const governmentCategResponse = await channel.send({
+    const governmentCategMsg = await channel.send({
         embeds: [governmentEmbed],
         components: [governmentCategRow]
     });
 
-    let governmentCateg = "";
+    const governmentCategCol = governmentCategMsg.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
 
-    const governmentCategCol = governmentCategResponse.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
-    console.log(governmentCateg);
-    
     governmentCategCol.on("collect", async i => {
+        governmentCategMsg.delete();
         const selection = i.values[0];
         if (selection === "democ") {
             const governmentDemocSelect = new StringSelectMenuBuilder()
-            .setCustomId("government")
+            .setCustomId("governmentdemoc")
             .setPlaceholder("Choose a democratic government type")
             .addOptions(
                 new StringSelectMenuOptionBuilder()
@@ -161,10 +159,17 @@ async function proceedWithRegistration(interaction, channel) {
             const governmentDemocRow = new ActionRowBuilder()
                 .addComponents(governmentDemocSelect);
 
-            const governmentDemocResponse = await channel.send({
+            const governmentDemocMsg = await channel.send({
                 content: "...",
                 components: [governmentDemocRow]
             });
+
+            const governmentDemocCol = governmentDemocMsg.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
+        
+            governmentDemocCol.on("collect", async i1 => {
+                governmentDemocMsg.delete();
+                const democSelection = i.values[0];
+            })
         }
     })
     
