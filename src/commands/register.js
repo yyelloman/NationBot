@@ -69,7 +69,7 @@ async function proceedWithRegistration(interaction, channel) {
     }
     const startEmbed = new EmbedBuilder()
         .setTitle("Country Registration")
-        .setDescription("Send any message within 3 minutes to begin. You will be given 3 minutes to answer each question. You can change your answers later with /settings.")
+        .setDescription("Send any message within 3 minutes to begin. You will be given 3 minutes to answer each question (unless it is a select menu). You can change your answers later with /nation config.")
         .setColor(ACCENT_COLOR);
     await channel.send({ content: `<@${interaction.user.id}>`, embeds: [startEmbed] });
     
@@ -117,11 +117,12 @@ async function proceedWithRegistration(interaction, channel) {
                 .setLabel("Democratic")
                 .setDescription("Any form of government where the power is exercised by the people")
                 .setValue("democ")
-                .setEmoji("1278346684283359233"),
+                .setEmoji("1279000100248748104"),
             new StringSelectMenuOptionBuilder()
                 .setLabel("Undemocratic")
                 .setDescription("Any form of government where power belongs to the ")
-                .setValue("undmc")
+                .setValue("undemoc")
+                .setEmoji("1279003115634298922")
         )
 
     const governmentCategRow = new ActionRowBuilder()
