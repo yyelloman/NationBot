@@ -139,7 +139,7 @@ async function proceedWithRegistration(interaction, channel) {
     const governmentCategColFilter = i => i.user.id === interaction.user.id;
 
     try {
-        const confirmation = await governmentCategResponse.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
+        const confirmation = await governmentCategResponse.awaitMessageComponent({ filter: governmentCategColFilter, time: 60_000 });
         
         governmentCateg = confirmation.customId;
     } catch (error) {
