@@ -167,6 +167,7 @@ async function proceedWithRegistration(interaction, channel) {
             .addComponents(governmentDemocSelect);
 
         const governmentDemocResponse = await channel.send({
+            content: "...",
             components: [governmentDemocRow]
         });
     }
