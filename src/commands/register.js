@@ -175,7 +175,7 @@ async function proceedWithRegistration(interaction, channel) {
         }
     })
 
-    await channel.send({ content: `government type = ${registrationData.governmentType}` })
+    await channel.send({ content: `government type = ${registrationData.governmentType}` });
     
 }
 
