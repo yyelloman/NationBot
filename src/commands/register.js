@@ -10,6 +10,18 @@ module.exports = {
     }
 }
 
+const governmentTypeMap = {
+    "dir-democ": "Direct Democracy",
+    "rep-democ": "Representative Democracy",
+    "dict": "Dictatorship",
+    "mon": "Monarchy",
+    "cons-mon": "Constitutional Monarchy",
+    "aris": "Aristocracy",
+    "pluto": "Plutocracy",
+    "strat": "Stratocracy",
+    "theo": "Theocracy",
+}
+
 async function register(interaction) {
     const embed = new EmbedBuilder()
         .setDescription(`**Alright, please wait :]**`)
@@ -226,7 +238,6 @@ async function proceedWithRegistration(interaction, channel) {
             const governmentUndemocCol = governmentUndemocMsg.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
         
             governmentUndemocCol.on("collect", async i1 => {
-                console.log(i1);
                 governmentUndemocMsg.delete();
                 const undemocSelection = i1.values[0];
                 registrationData.governmentType = undemocSelection;
@@ -238,7 +249,7 @@ async function proceedWithRegistration(interaction, channel) {
 
 async function registration2(interaction, channel, registrationData) {
     const governmentSelectedEmbed = new EmbedBuilder()
-        .setDescription(`Government type selected: ${registrationData.governmentType}`)
+        .setDescription(`Government type selected: **${governmentTypeMap[registrationData.governmentType]}**`)
         .setColor(ACCENT_COLOR);
 
     await channel.send({ embeds: [governmentSelectedEmbed] });
