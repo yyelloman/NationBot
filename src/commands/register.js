@@ -226,6 +226,7 @@ async function proceedWithRegistration(interaction, channel) {
             const governmentUndemocCol = governmentUndemocMsg.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
         
             governmentUndemocCol.on("collect", async i1 => {
+                console.log(i1);
                 governmentUndemocMsg.delete();
                 const undemocSelection = i1.values[0];
                 registrationData.governmentType = undemocSelection;
