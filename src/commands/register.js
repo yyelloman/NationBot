@@ -155,7 +155,7 @@ async function proceedWithRegistration(interaction, channel) {
                     .setDescription("Where the people elect rep.'s for law making")
                     .setValue("rep-democ")
                     .setEmoji("1279017005004886046")
-            )
+            );
 
             const governmentDemocRow = new ActionRowBuilder()
                 .addComponents(governmentDemocSelect);
@@ -171,6 +171,63 @@ async function proceedWithRegistration(interaction, channel) {
                 governmentDemocMsg.delete();
                 const democSelection = i.values[0];
                 registrationData.governmentType = democSelection;
+            })
+        } else if (selection === "undemoc") {
+            const governmentDemocSelect = new StringSelectMenuBuilder()
+            .setCustomId("governmentdemoc")
+            .setPlaceholder("Choose a undemocratic government type")
+            .addOptions(
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Dictatorship")
+                    .setDescription("The one leader has absolute power, and came to power by taking it")
+                    .setValue("dict")
+                    .setEmoji("1280141246962204703"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Monarchy")
+                    .setDescription("The one leader has absolute power, and came to power by inheritance")
+                    .setValue("mon")
+                    .setEmoji("1280141257846558791"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Constitutional Monarchy")
+                    .setDescription("Monarchy that follows a constitution")
+                    .setValue("cons-mon")
+                    .setEmoji("1280141283163111424"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Aristocracy")
+                    .setDescription("Lead by the noble")
+                    .setValue("aris")
+                    .setEmoji("1280141294483669054"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Plutocracy")
+                    .setDescription("Lead by the rich")
+                    .setValue("pluto")
+                    .setEmoji("1280141305539723385"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Stratocracy")
+                    .setDescription("Lead by the military")
+                    .setValue("strat")
+                    .setEmoji("1280141320362659910"),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel("Theocracy")
+                    .setDescription("Lead by religious leaders")
+                    .setValue("theo")
+                    .setEmoji("1280141340310507541")
+            );
+
+            const governmentUndemocRow = new ActionRowBuilder()
+                .addComponents(governmentDemocSelect);
+
+            const governmentUndemocMsg = await channel.send({
+                content: "...",
+                components: [governmentUndemocRow]
+            });
+
+            const governmentUndemocCol = governmentUndemocMsg.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000})
+        
+            governmentUndemocCol.on("collect", async i1 => {
+                governmentUndemocMsg.delete();
+                const undemocSelection = i.values[0];
+                registrationData.governmentType = undemocSelection;
             })
         }
     })
