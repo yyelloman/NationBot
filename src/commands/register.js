@@ -169,7 +169,7 @@ async function proceedWithRegistration(interaction, channel) {
         
             governmentDemocCol.on("collect", async i1 => {
                 governmentDemocMsg.delete();
-                const democSelection = i.values[0];
+                const democSelection = i1.values[0];
                 registrationData.governmentType = democSelection;
                 registration2(interaction, channel, registrationData);
             })
@@ -227,7 +227,7 @@ async function proceedWithRegistration(interaction, channel) {
         
             governmentUndemocCol.on("collect", async i1 => {
                 governmentUndemocMsg.delete();
-                const undemocSelection = i.values[0];
+                const undemocSelection = i1.values[0];
                 registrationData.governmentType = undemocSelection;
                 registration2(interaction, channel, registrationData);
             })
