@@ -171,6 +171,7 @@ async function proceedWithRegistration(interaction, channel) {
                 governmentDemocMsg.delete();
                 const democSelection = i.values[0];
                 registrationData.governmentType = democSelection;
+                registration2(interaction, channel, registrationData);
             })
         } else if (selection === "undemoc") {
             const governmentDemocSelect = new StringSelectMenuBuilder()
@@ -228,9 +229,18 @@ async function proceedWithRegistration(interaction, channel) {
                 governmentUndemocMsg.delete();
                 const undemocSelection = i.values[0];
                 registrationData.governmentType = undemocSelection;
+                registration2(interaction, channel, registrationData);
             })
         }
     })
+}
+
+async function registration2(interaction, channel, registrationData) {
+    const governmentSelectedEmbed = new EmbedBuilder()
+        .setDescription(`Government type selected: ${registrationData.governmentType}`)
+        .setColor(ACCENT_COLOR);
+
+    await channel.send({ embeds: [governmentSelectedEmbed] });
 }
 
 function noResponse(interaction, channel) {
