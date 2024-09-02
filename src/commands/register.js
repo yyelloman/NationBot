@@ -179,12 +179,12 @@ async function proceedWithRegistration(interaction, channel) {
             .addOptions(
                 new StringSelectMenuOptionBuilder()
                     .setLabel("Dictatorship")
-                    .setDescription("The one leader has absolute power, and came to power by taking it")
+                    .setDescription("One leader with total power, came to power by taking it")
                     .setValue("dict")
                     .setEmoji("1280141246962204703"),
                 new StringSelectMenuOptionBuilder()
                     .setLabel("Monarchy")
-                    .setDescription("The one leader has absolute power, and came to power by inheritance")
+                    .setDescription("One leader with total power, came to power by inheritance")
                     .setValue("mon")
                     .setEmoji("1280141257846558791"),
                 new StringSelectMenuOptionBuilder()
